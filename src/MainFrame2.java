@@ -2,6 +2,7 @@ import PaqC03.Cliente;
 import PaqC03.Hotel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -31,6 +32,7 @@ public class MainFrame2 extends JFrame{
     private JButton btnAnular;
     private JTextField txtEstandar;
     private JTextField txtSuite;
+    private JButton btnBuscarporDNI;
 
     int precioTotal = 0;
     String opcion1="";
@@ -199,6 +201,27 @@ public class MainFrame2 extends JFrame{
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
+                }
+            }
+        });
+        btnBuscarporDNI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Cliente c1;
+                try {
+                    c1 = hotel.buscarClienteporDNI(Integer.parseInt(txtDNI.getText()));
+                    if (c1 != null) {
+                        txtDNI.setText(String.valueOf(c1.getDNI()));
+                        txtNombre.setText(c1.getNombre());
+                        txtApellidos.setText(c1.getApellidos());
+                        txtTelefono.setText(String.valueOf(c1.getNumTelef()));
+                        txtTarjeta.setText(String.valueOf(c1.getNumTarjet()));
+                        txtEntrada.setText(c1.getFechaEntrada());
+                        txtSalida.setText(c1.getFechaSalida());
+                        txtAlimentacion.setText(c1.getRegAlimenticio());
+                    }
+                } catch (NullPointerException ex) {
+                    JOptionPane.showMessageDialog(null, "El cliente con este DNI no tiene reservas en el hotel", "Error al encontrar DNI", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
